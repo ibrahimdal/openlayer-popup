@@ -10,19 +10,20 @@ import Overlay from 'ol/Overlay';
 */
 export default class Popup extends Overlay {
 
-    constructor(opt_options) {
+    constructor(opt_options, special_options) {
 
         var options = opt_options || {};
 
-        if (options.autoPan === undefined) {
-            options.autoPan = true;
-        }
+        //removed autopan.
+        // if (options.autoPan === undefined) {
+        //     options.autoPan = true;
+        // }
 
-        if (options.autoPanAnimation === undefined) {
-            options.autoPanAnimation = {
-                duration: 250
-            };
-        }
+        // if (options.autoPanAnimation === undefined) {
+        //     options.autoPanAnimation = {
+        //         duration: 250
+        //     };
+        // }
 
         var element = document.createElement('div');
 
@@ -30,19 +31,21 @@ export default class Popup extends Overlay {
         super(options);
 
         this.container = element;
-        this.container.className = 'ol-popup';
+        // this.container.className = 'ol-popup';
+        this.container.className = special_options.mainClassName;
 
-        this.closer = document.createElement('a');
-        this.closer.className = 'ol-popup-closer';
-        this.closer.href = '#';
-        this.container.appendChild(this.closer);
+        //removed closer button.
+        // this.closer = document.createElement('a');
+        // this.closer.className = 'ol-popup-closer';
+        // this.closer.href = '#';
+        // this.container.appendChild(this.closer);
 
-        var that = this;
-        this.closer.addEventListener('click', function(evt) {
-            that.container.style.display = 'none';
-            that.closer.blur();
-            evt.preventDefault();
-        }, false);
+        // var that = this;
+        // this.closer.addEventListener('click', function(evt) {
+        //     that.container.style.display = 'none';
+        //     that.closer.blur();
+        //     evt.preventDefault();
+        // }, false);
 
         this.content = document.createElement('div');
         this.content.className = 'ol-popup-content';
@@ -59,17 +62,40 @@ export default class Popup extends Overlay {
     * @param {String|HTMLElement} html String or element of HTML to display within the popup.
     * @returns {Popup} The Popup instance
     */
-    show(coord, html) {
+    // show(coord, html) {
+    //     if (html instanceof HTMLElement) {
+    //         this.content.innerHTML = "";
+    //         this.content.appendChild(html);
+    //     } else {
+    //         this.content.innerHTML = html;
+    //     }
+    //     this.container.style.display = 'block';
+    //     this.content.scrollTop = 0;
+    //     this.setPosition(coord);
+    //     return this;
+    // }
+
+    /**
+     * set content html
+     * @param {String|HTMLElement} html 
+     */
+    setContent(html) {
         if (html instanceof HTMLElement) {
             this.content.innerHTML = "";
             this.content.appendChild(html);
         } else {
             this.content.innerHTML = html;
         }
-        this.container.style.display = 'block';
+        this.container.style.display = 'none';
         this.content.scrollTop = 0;
-        this.setPosition(coord);
-        return this;
+    }
+
+    /**
+     * Set main class name
+     * @param {String} _mainClassName 
+     */
+    setMainClass(_mainClassName) {
+        this.container.className = _mainClassName;
     }
 
     /**
@@ -81,7 +107,7 @@ export default class Popup extends Overlay {
         try {
             document.createEvent("TouchEvent");
             return true;
-        } catch(e) {
+        } catch (e) {
             return false;
         }
     }
@@ -92,12 +118,12 @@ export default class Popup extends Overlay {
     * element. Adapted from https://gist.github.com/chrismbarr/4107472
     */
     static enableTouchScroll_(elm) {
-        if(Popup.isTouchDevice_()){
+        if (Popup.isTouchDevice_()) {
             var scrollStartPos = 0;
-            elm.addEventListener("touchstart", function(event) {
+            elm.addEventListener("touchstart", function (event) {
                 scrollStartPos = this.scrollTop + event.touches[0].pageY;
             }, false);
-            elm.addEventListener("touchmove", function(event) {
+            elm.addEventListener("touchmove", function (event) {
                 this.scrollTop = scrollStartPos - event.touches[0].pageY;
             }, false);
         }
@@ -109,6 +135,15 @@ export default class Popup extends Overlay {
     */
     hide() {
         this.container.style.display = 'none';
+        return this;
+    }
+
+    /**
+    * Show the popup.
+    * @returns {Popup} The Popup instance
+    */
+    show() {
+        this.container.style.display = 'block';
         return this;
     }
 

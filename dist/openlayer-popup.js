@@ -84,21 +84,22 @@ var possibleConstructorReturn = function (self, call) {
 var Popup = function (_Overlay) {
     inherits(Popup, _Overlay);
 
-    function Popup(opt_options) {
+    function Popup(opt_options, special_options) {
         classCallCheck(this, Popup);
 
 
         var options = opt_options || {};
 
-        if (options.autoPan === undefined) {
-            options.autoPan = true;
-        }
+        //removed autopan.
+        // if (options.autoPan === undefined) {
+        //     options.autoPan = true;
+        // }
 
-        if (options.autoPanAnimation === undefined) {
-            options.autoPanAnimation = {
-                duration: 250
-            };
-        }
+        // if (options.autoPanAnimation === undefined) {
+        //     options.autoPanAnimation = {
+        //         duration: 250
+        //     };
+        // }
 
         var element = document.createElement('div');
 
@@ -107,19 +108,21 @@ var Popup = function (_Overlay) {
         var _this = possibleConstructorReturn(this, (Popup.__proto__ || Object.getPrototypeOf(Popup)).call(this, options));
 
         _this.container = element;
-        _this.container.className = 'ol-popup';
+        // this.container.className = 'ol-popup';
+        _this.container.className = special_options.mainClassName;
 
-        _this.closer = document.createElement('a');
-        _this.closer.className = 'ol-popup-closer';
-        _this.closer.href = '#';
-        _this.container.appendChild(_this.closer);
+        //removed closer button.
+        // this.closer = document.createElement('a');
+        // this.closer.className = 'ol-popup-closer';
+        // this.closer.href = '#';
+        // this.container.appendChild(this.closer);
 
-        var that = _this;
-        _this.closer.addEventListener('click', function (evt) {
-            that.container.style.display = 'none';
-            that.closer.blur();
-            evt.preventDefault();
-        }, false);
+        // var that = this;
+        // this.closer.addEventListener('click', function(evt) {
+        //     that.container.style.display = 'none';
+        //     that.closer.blur();
+        //     evt.preventDefault();
+        // }, false);
 
         _this.content = document.createElement('div');
         _this.content.className = 'ol-popup-content';
@@ -137,21 +140,47 @@ var Popup = function (_Overlay) {
     * @param {String|HTMLElement} html String or element of HTML to display within the popup.
     * @returns {Popup} The Popup instance
     */
+    // show(coord, html) {
+    //     if (html instanceof HTMLElement) {
+    //         this.content.innerHTML = "";
+    //         this.content.appendChild(html);
+    //     } else {
+    //         this.content.innerHTML = html;
+    //     }
+    //     this.container.style.display = 'block';
+    //     this.content.scrollTop = 0;
+    //     this.setPosition(coord);
+    //     return this;
+    // }
+
+    /**
+     * set content html
+     * @param {String|HTMLElement} html 
+     */
 
 
     createClass(Popup, [{
-        key: 'show',
-        value: function show(coord, html) {
+        key: 'setContent',
+        value: function setContent(html) {
             if (html instanceof HTMLElement) {
                 this.content.innerHTML = "";
                 this.content.appendChild(html);
             } else {
                 this.content.innerHTML = html;
             }
-            this.container.style.display = 'block';
+            this.container.style.display = 'none';
             this.content.scrollTop = 0;
-            this.setPosition(coord);
-            return this;
+        }
+
+        /**
+         * Set main class name
+         * @param {String} _mainClassName 
+         */
+
+    }, {
+        key: 'setMainClass',
+        value: function setMainClass(_mainClassName) {
+            this.container.className = _mainClassName;
         }
 
         /**
@@ -170,6 +199,18 @@ var Popup = function (_Overlay) {
         */
         value: function hide() {
             this.container.style.display = 'none';
+            return this;
+        }
+
+        /**
+        * Show the popup.
+        * @returns {Popup} The Popup instance
+        */
+
+    }, {
+        key: 'show',
+        value: function show() {
+            this.container.style.display = 'block';
             return this;
         }
 
