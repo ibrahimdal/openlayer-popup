@@ -1,0 +1,30 @@
+{
+    "name": "openlayer-popup",
+    "version": "1.0.0",
+    "homepage": "https://github.com/ibrahimdal/openlayer-popup",
+    "authors": [
+      "İbrahim Dal (http://ibrahimdal.github.io)"
+    ],
+    "description": "Openlayer special popup",
+    "main": [
+      "dist/openlayer-popup.js",
+      "src/openlayer-popup.css"
+    ],
+    "keywords": [
+      "openlayers",
+      "ol",
+      "ol3",
+      "ol4",
+      "ol5",
+      "overlay",
+      "popup",
+      "info"
+    ],
+    "license": "MIT",
+    "ignore": [
+      "**/.*",
+      "node_modules",
+      "bower_components",
+      "test"
+    ]
+  }
