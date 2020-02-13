@@ -98,6 +98,12 @@ export default class Popup extends Overlay {
         this.container.className = _mainClassName;
     }
 
+    update(_options){
+        this.content.innerHTML = _options.html;
+        this.container.className = _options.mainClassName;
+        this.setPosition(_options.coord);
+    }
+
     /**
     * @private
     * @desc Determine if the current browser supports touch events. Adapted from

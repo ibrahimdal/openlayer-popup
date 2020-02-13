@@ -182,6 +182,13 @@ var Popup = function (_Overlay) {
         value: function setMainClass(_mainClassName) {
             this.container.className = _mainClassName;
         }
+    }, {
+        key: 'update',
+        value: function update(_options) {
+            this.content.innerHTML = _options.html;
+            this.container.className = _options.mainClassName;
+            this.setPosition(_options.coord);
+        }
 
         /**
         * @private
